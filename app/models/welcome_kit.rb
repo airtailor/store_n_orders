@@ -1,11 +1,11 @@
 class WelcomeKit < Order
   belongs_to :retailer,
-        class_name: "Retailer",
-        foreign_key: "retailer_id"
+    class_name: "Retailer",
+    foreign_key: "provider_id"
 
-  def stores
-    {
-      retailer: self.retailer
-    }
+  after_initialize :init
+
+  def init
+    self.retailer ||= Retailer.where(name: "Air Tailor").first
   end
 end

@@ -10,15 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608062934) do
+ActiveRecord::Schema.define(version: 20170608184004) do
 
   create_table "headquarters", force: :cascade do |t|
   end
 
   create_table "orders", force: :cascade do |t|
     t.string "name"
-    t.integer "retailer_id"
-    t.index ["retailer_id"], name: "index_orders_on_retailer_id"
+    t.integer "requester_id"
+    t.integer "provider_id"
+    t.string "type"
+    t.index ["provider_id"], name: "index_orders_on_provider_id"
+    t.index ["requester_id"], name: "index_orders_on_requester_id"
   end
 
   create_table "retailers", force: :cascade do |t|
@@ -29,11 +32,6 @@ ActiveRecord::Schema.define(version: 20170608062934) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type"
-  end
-
-  create_table "tailor_orders", force: :cascade do |t|
-    t.integer "tailor_id"
-    t.index ["tailor_id"], name: "index_tailor_orders_on_tailor_id"
   end
 
   create_table "tailors", force: :cascade do |t|
