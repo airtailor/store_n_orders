@@ -1,4 +1,4 @@
-class Retailer < Store 
+class Retailer < Store
   validates :name, presence: true, uniqueness: true
-  has_many :orders
+  # has_many :orders
 end

@@ -10,14 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608045252) do
+ActiveRecord::Schema.define(version: 20170608055240) do
 
-  create_table "orders", force: :cascade do |t|
-    t.string "name"
-    t.integer "retailer_id"
-    t.integer "tailor_id"
-    t.index ["retailer_id"], name: "index_orders_on_retailer_id"
-    t.index ["tailor_id"], name: "index_orders_on_tailor_id"
+  create_table "headquarters", force: :cascade do |t|
   end
 
   create_table "retailers", force: :cascade do |t|
