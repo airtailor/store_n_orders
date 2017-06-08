@@ -61,3 +61,21 @@ new_retail.errors.messages
   => {:name=>["has already been taken"]}
   # We Cant Make Two Retailers With the Same Name
 ```
+
+# Stores 
+
+```
+airtailor = Retailer.create(name: "Air Tailor")
+
+pants = Order.create(name: "Pants", retailer: airtailor)
+
+pants.stores 
+    => {:retailer=>#<Retailer id: nil, name: "Air Tailor", created_at: nil, updated_at: nil, type: "Retailer">}
+
+joes = Tailor.create(name: "Joes")
+
+shirt = Order.create(name: "Shirt", retailer: joes)
+  => #<ActiveRecord::Relation []> irb(main):006:0> shirt = Order.create(name: "Shirt", retailer: joes) ActiveRecord::AssociationTypeMismatch: Retailer(#70248135940600) expected, got #<Tailor id: 10, name: "Joes", created_at: "2017-06-08 06:18:54", updated_at: "2017-06-08 06:18:54", type: "Tailor"> which is an instance of Tailor(#70248156812820)
+  # Cant Add a Tailor as a Retailor
+  
+```
