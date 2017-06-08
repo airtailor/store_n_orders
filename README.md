@@ -62,7 +62,7 @@ new_retail.errors.messages
   # We Cant Make Two Retailers With the Same Name
 ```
 
-# Stores 
+# Orders 
 
 ```
 airtailor = Retailer.create(name: "Air Tailor")
@@ -77,6 +77,17 @@ hello.stores
 
 WelcomeKit.all 
   => #<ActiveRecord::Relation [#<WelcomeKit id: 7, name: "Hello!", retailer_id: 12>]>
+
+TailorOrder.first
+  => #<TailorOrder id: 6, name: "Hello!", retailer_id: 8>
+  # SHOULDNT HAVE THE WELCOME KIT STUFF
+  # TRY TOMORROW TO REMOVE THE RETAILER FROM THE ORDER
+
+** Uninitialized constant TailorOrder
+ -- => nil 
+  --# TailorOrder is not the same class as WelcomeKit
+
+joes = Tailor.create(name: "Joes")
 
 --pants = Order.create(name: "Pants", retailer: airtailor)
 
