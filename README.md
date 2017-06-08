@@ -67,37 +67,36 @@ new_retail.errors.messages
 ```
 airtailor = Retailer.create(name: "Air Tailor")
 
-hello = WelcomeKit.create(name: "Hello!", retailer: airtailor)
+hello = WelcomeKit.create(name: "Hello!")
 
 hello.retailer 
-  => #<Retailer id: 12, name: "Air Tailor", created_at: "2017-06-08 06:26:16", updated_at: "2017-06-08 06:26:16", type: "Retailer">
-
-hello.stores
-  => {:retailer=>#<Retailer id: 12, name: "Air Tailor", created_at: "2017-06-08 06:26:16", updated_at: "2017-06-08 06:26:16", type: "Retailer">}
+  => #<Retailer id: 1, name: "Air Tailor", created_at: "2017-06-08 19:13:39", updated_at: "2017-06-08 19:13:39", type: "Retailer">
+  # automatically airtailor 
 
 WelcomeKit.all 
   => #<ActiveRecord::Relation [#<WelcomeKit id: 7, name: "Hello!", retailer_id: 12>]>
 
 TailorOrder.first
-  => #<TailorOrder id: 6, name: "Hello!", retailer_id: 8>
-  # SHOULDNT HAVE THE WELCOME KIT STUFF
-  # TRY TOMORROW TO REMOVE THE RETAILER FROM THE ORDER
+  => nil
 
-** Uninitialized constant TailorOrder
- -- => nil 
-  --# TailorOrder is not the same class as WelcomeKit
+TailorOrder.create(name: "Pants", retailer: airtailor)
+  => rollback 
+  # no tailor provided
 
-joes = Tailor.create(name: "Joes")
+pants = TailorOrder.create(name: "Pants", retailer: airtailor, tailor: joes)
 
---pants = Order.create(name: "Pants", retailer: airtailor)
+pants.tailor 
+  => #<Tailor id: 3, name: "Joes", created_at: "2017-06-08 19:13:53", updated_at: "2017-06-08 19:13:53", type: "Tailor">
 
---pants.stores 
-    => {:retailer=>#<Retailer id: nil, name: "Air Tailor", created_at: nil, updated_at: nil, type: "Retailer">}
+pants.retailer 
+  => #<Retailer id: 1, name: "Air Tailor", created_at: "2017-06-08 19:13:39", updated_at: "2017-06-08 19:13:39", type: "Retailer">
 
---joes = Tailor.create(name: "Joes")
+pants.stores
+  => {:retailer=>#<Retailer id: 1, name: "Air Tailor", created_at: "2017-06-08 19:13:39", updated_at: "2017-06-08 19:13:39", type: "Retailer">, :tailor=>#<Tailor id: 3, name: "Joes", created_at: "2017-06-08 19:13:53", updated_at: "2017-06-08 19:13:53", type: "Tailor">}
 
---shirt = Order.create(name: "Shirt", retailer: joes)
-  => #<ActiveRecord::Relation []> irb(main):006:0> shirt = Order.create(name: "Shirt", retailer: joes) ActiveRecord::AssociationTypeMismatch: Retailer(#70248135940600) expected, got #<Tailor id: 10, name: "Joes", created_at: "2017-06-08 06:18:54", updated_at: "2017-06-08 06:18:54", type: "Tailor"> which is an instance of Tailor(#70248156812820)
-  # Cant Add a Tailor as a Retailor
+pants.retailer.orders
+  => #<ActiveRecord::Relation [#<TailorOrder id: 3, name: "Pants", requester_id: 1, provider_id: 3, type: "TailorOrder">, #<TailorOrder id: 4, name: "Shirt", requester_id: 1, provider_id: 3, type: "TailorOrder">, #<TailorOrder id: 5, name: "Shirt", requester_id: 1, provider_id: 3, type: "TailorOrder">]>
 
+pants.tailor.orders 
+  => #<ActiveRecord::Relation [#<TailorOrder id: 3, name: "Pants", requester_id: 1, provider_id: 3, type: "TailorOrder">, #<TailorOrder id: 4, name: "Shirt", requester_id: 1, provider_id: 3, type: "TailorOrder">, #<TailorOrder id: 5, name: "Shirt", requester_id: 1, provider_id: 3, type: "TailorOrder">, #<TailorOrder id: 6, name: "Socks", requester_id: 2, provider_id: 3, type: "TailorOrder">]>
 ```
