@@ -67,15 +67,26 @@ new_retail.errors.messages
 ```
 airtailor = Retailer.create(name: "Air Tailor")
 
-pants = Order.create(name: "Pants", retailer: airtailor)
+hello = WelcomeKit.create(name: "Hello!", retailer: airtailor)
 
-pants.stores 
+hello.retailer 
+  => #<Retailer id: 12, name: "Air Tailor", created_at: "2017-06-08 06:26:16", updated_at: "2017-06-08 06:26:16", type: "Retailer">
+
+hello.stores
+  => {:retailer=>#<Retailer id: 12, name: "Air Tailor", created_at: "2017-06-08 06:26:16", updated_at: "2017-06-08 06:26:16", type: "Retailer">}
+
+WelcomeKit.all 
+  => #<ActiveRecord::Relation [#<WelcomeKit id: 7, name: "Hello!", retailer_id: 12>]>
+
+--pants = Order.create(name: "Pants", retailer: airtailor)
+
+--pants.stores 
     => {:retailer=>#<Retailer id: nil, name: "Air Tailor", created_at: nil, updated_at: nil, type: "Retailer">}
 
-joes = Tailor.create(name: "Joes")
+--joes = Tailor.create(name: "Joes")
 
-shirt = Order.create(name: "Shirt", retailer: joes)
+--shirt = Order.create(name: "Shirt", retailer: joes)
   => #<ActiveRecord::Relation []> irb(main):006:0> shirt = Order.create(name: "Shirt", retailer: joes) ActiveRecord::AssociationTypeMismatch: Retailer(#70248135940600) expected, got #<Tailor id: 10, name: "Joes", created_at: "2017-06-08 06:18:54", updated_at: "2017-06-08 06:18:54", type: "Tailor"> which is an instance of Tailor(#70248156812820)
   # Cant Add a Tailor as a Retailor
-  
+
 ```
